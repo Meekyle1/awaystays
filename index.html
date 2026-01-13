@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AwayStays — Liverpool Away Day Stays</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#101824;
+      --panel2:#0f1722;
+      --text:#e7eef7;
+      --muted:#a9b4c2;
+      --line:#1d2a3a;
+      --accent:#e31b23;   /* LFC red vibe without using logos */
+      --good:#36d399;
+      --warn:#fbbf24;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius2: 22px;
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(227,27,35,.25), transparent 60%),
+                  radial-gradient(900px 500px at 10% 10%, rgba(54,211,153,.12), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0; position:sticky; top:0; backdrop-filter: blur(10px);
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .logo{
+      width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff5660);
+      display:grid;place-items:center;box-shadow:var(--shadow);font-weight:900;
+    }
+    .navlinks{display:flex;gap:18px;color:var(--muted);font-weight:600}
+    .cta{
+      background:linear-gradient(135deg,var(--accent),#ff4b55);
+      padding:10px 14px;border-radius:12px;font-weight:800;box-shadow:var(--shadow);
+    }
+    .hero{
+      display:grid;grid-template-columns: 1.2fr .8fr; gap:22px; align-items:stretch;
+      padding:26px 0 12px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+    }
+    .hero-left{padding:26px}
+    .kicker{color:var(--muted);font-weight:700}
+    h1{margin:10px 0 10px;font-size:44px;line-height:1.05}
+    .sub{color:var(--muted);font-size:16px;max-width:52ch}
+    .pillrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .pill{
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(16,24,36,.55);
+      color:var(--text);
+      border-radius:999px;padding:8px 10px;font-weight:700;font-size:13px;
+    }
+    .pill strong{color:var(--good)}
+    .search{
+      display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;
+      padding:12px;border-radius:18px;background:rgba(16,24,36,.6);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .field{flex:1 1 160px; display:flex; flex-direction:column; gap:6px}
+    label{font-size:12px;color:var(--muted);font-weight:700}
+    select, input{
+      padding:12px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(11,15,20,.7); color:var(--text); outline:none;
+    }
+    .btn{
+      flex:0 0 auto; align-self:end;
+      padding:12px 14px;border-radius:12px;border:0;
+      background:linear-gradient(135deg,var(--accent),#ff4b55);
+      color:white;font-weight:900;cursor:pointer; box-shadow:var(--shadow);
+      height:44px;
+    }
+    .hero-right{padding:18px}
+    .mini{
+      padding:16px;border-radius:18px;background:rgba(16,24,36,.6);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .mini h3{margin:0 0 10px;font-size:14px;color:var(--muted);letter-spacing:.3px}
+    .steps{display:grid;gap:10px}
+    .step{
+      display:grid;grid-template-columns: 34px 1fr; gap:10px; align-items:center;
+      padding:10px;border-radius:14px;border:1px solid rgba(255,255,255,.06);
+      background:rgba(15,23,34,.55);
+    }
+    .num{
+      width:34px;height:34px;border-radius:12px;display:grid;place-items:center;
+      background:rgba(227,27,35,.18);border:1px solid rgba(227,27,35,.45);
+      color:#ffd6d8;font-weight:900;
+    }
+    .step b{display:block}
+    .step span{color:var(--muted);font-size:13px}
+    .section{padding:16px 0}
+    .section h2{margin:8px 0 8px;font-size:22px}
+    .muted{color:var(--muted)}
+    .grid3{display:grid;grid-template-columns: repeat(3,1fr); gap:14px}
+    .listing{padding:14px}
+    .thumb{
+      height:150px;border-radius:14px;
+      background:
+        linear-gradient(135deg, rgba(227,27,35,.25), rgba(54,211,153,.12)),
+        radial-gradient(400px 160px at 20% 20%, rgba(255,255,255,.10), transparent 60%),
+        rgba(16,24,36,.8);
+      border:1px solid rgba(255,255,255,.07);
+      position:relative; overflow:hidden;
+    }
+    .badge{
+      position:absolute;top:10px;left:10px;
+      background:rgba(11,15,20,.75); border:1px solid rgba(255,255,255,.12);
+      padding:6px 8px;border-radius:999px;font-size:12px;font-weight:800;
+    }
+    .rating{
+      position:absolute;top:10px;right:10px;
+      background:rgba(11,15,20,.75); border:1px solid rgba(255,255,255,.12);
+      padding:6px 8px;border-radius:999px;font-size:12px;font-weight:800;
+      color:#ffe08a;
+    }
+    .title{margin:10px 0 2px;font-weight:900}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+    .price{
+      display:flex;align-items:baseline;justify-content:space-between;margin-top:10px;
+      padding-top:10px;border-top:1px solid rgba(255,255,255,.08);
+    }
+    .price b{font-size:18px}
+    .small{font-size:12px;color:var(--muted)}
+    .selectbtn{
+      padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(16,24,36,.65);font-weight:900;cursor:pointer;
+    }
+    .grid2{display:grid;grid-template-columns: 1fr 1fr; gap:14px}
+    .pack{padding:16px}
+    .pack h3{margin:4px 0 6px}
+    .tag{
+      display:inline-flex;gap:6px;align-items:center;
+      font-size:12px;font-weight:900;border-radius:999px;padding:6px 10px;
+      border:1px solid rgba(255,255,255,.10); background:rgba(16,24,36,.65);
+      color:#dfe7f1;
+    }
+    ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    .pack .buy{
+      margin-top:14px; width:100%; height:44px; border-radius:12px; border:0;
+      background:linear-gradient(135deg,var(--accent),#ff4b55);
+      color:white;font-weight:900; cursor:pointer;
+    }
+    .footer{
+      margin-top:20px;padding:18px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.08);
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      font-size:13px;
+    }
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
+      h1{font-size:38px}
+      .grid3{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .navlinks{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <div style="font-size:14px;opacity:.9">AwayStays</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:700">Away fan matchday bases</div>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a href="#bases">Bases</a>
+        <a href="#packages">Packages</a>
+        <a href="#how">How it works</a>
+        <a href="#hosts">For hosts</a>
+      </div>
+      <a class="cta" href="#packages">Book an away day</a>
+    </div>
+
+    <div class="hero">
+      <div class="card hero-left">
+        <div class="kicker">Liverpool • City Centre • Matchday-ready</div>
+        <h1>Your away day in Liverpool — <span style="color:var(--accent)">sorted</span>.</h1>
+        <p class="sub">
+          Stay in the city for the nightlife, then follow our matchday routes to Anfield.
+          Every base comes with an Away Fan Guide: pubs (with commentary), food, bus stops, and post‑match plans.
+        </p>
+
+        <div class="pillrow">
+          <div class="pill">✅ <strong>Fan guide</strong> included</div>
+          <div class="pill">🚌 Bus stops + routes</div>
+          <div class="pill">🍻 Best pints map</div>
+          <div class="pill">🎶 Live music spots</div>
+          <div class="pill">🌙 Quiet options too</div>
+        </div>
+
+        <div class="search" aria-label="matchday search">
+          <div class="field">
+            <label>Match</label>
+            <select>
+              <option>Choose a fixture…</option>
+              <option>Premier League — Liverpool vs Man United</option>
+              <option>Premier League — Liverpool vs Arsenal</option>
+              <option>Europe Night — Liverpool vs AC Milan</option>
+              <option>Derby — Liverpool vs Everton</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Guests</label>
+            <select>
+              <option>2 guests</option>
+              <option>1 guest</option>
+              <option>3 guests</option>
+              <option>4 guests</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Dates</label>
+            <input placeholder="Fri–Sun (auto from fixture)" />
+          </div>
+          <button class="btn">Find bases</button>
+        </div>
+
+        <div class="muted" style="margin-top:10px;font-size:13px">
+          Tip: pick the vibe you want (party, relaxed, or “in-and-out”) and we’ll guide the rest.
+        </div>
+      </div>
+
+      <div class="card hero-right" id="how">
+        <div class="mini">
+          <h3>HOW IT WORKS</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="num">1</div>
+              <div><b>Choose a base</b><span>City centre locations with a specific vibe.</span></div>
+            </div>
+            <div class="step">
+              <div class="num">2</div>
+              <div><b>Get your Away Fan Guide</b><span>Pubs with commentary, food, routes, music.</span></div>
+            </div>
+            <div class="step">
+              <div class="num">3</div>
+              <div><b>Matchday routes</b><span>Best bus stop + return plan to avoid chaos.</span></div>
+            </div>
+            <div class="step">
+              <div class="num">4</div>
+              <div><b>Back to nightlife</b><span>Post‑match takeaways, late restaurants, live music.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini" style="margin-top:12px">
+          <h3>WHAT YOU GET</h3>
+          <div class="pillrow" style="margin-top:0">
+            <div class="pill">🍺 Welcome drinks add‑on</div>
+            <div class="pill">🧣 Scarf add‑on</div>
+            <div class="pill">🗺️ Interactive maps</div>
+            <div class="pill">💬 WhatsApp concierge</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="bases">
+      <h2>Pick your matchday base</h2>
+      <p class="muted">These are examples of how you’d rebrand city-centre rooms into fan-first “bases”.</p>
+
+      <div class="grid3">
+        <div class="card listing">
+          <div class="thumb">
+            <div class="badge">Ropewalks • Party vibe</div>
+            <div class="rating">★ 4.7</div>
+          </div>
+          <div class="title">Lucho’s Lounge</div>
+          <div class="meta">
+            <span>👥 Sleeps 2</span>
+            <span>🚌 12–18 mins route</span>
+            <span>🍻 6 pubs nearby</span>
+          </div>
+          <div class="price">
+            <div>
+              <b>£239</b> <span class="small">/ night (match weekend)</span><br/>
+              <span class="small">Away Fan Guide included</span>
+            </div>
+            <button class="selectbtn">View base</button>
+          </div>
+        </div>
+
+        <div class="card listing">
+          <div class="thumb">
+            <div class="badge">Baltic • Music + craft</div>
+            <div class="rating">★ 4.6</div>
+          </div>
+          <div class="title">Stevie’s Screamer</div>
+          <div class="meta">
+            <span>👥 Sleeps 3</span>
+            <span>🚌 14–22 mins route</span>
+            <span>🎶 4 live spots</span>
+          </div>
+          <div class="price">
+            <div>
+              <b>£219</b> <span class="small">/ night (match weekend)</span><br/>
+              <span class="small">Late-night food list included</span>
+            </div>
+            <button class="selectbtn">View base</button>
+          </div>
+        </div>
+
+        <div class="card listing">
+          <div class="thumb">
+            <div class="badge">Lime St • Logistics</div>
+            <div class="rating">★ 4.5</div>
+          </div>
+          <div class="title">The Kop End</div>
+          <div class="meta">
+            <span>👥 Sleeps 2</span>
+            <span>🚆 Near Lime Street</span>
+            <span>🚌 Easy pickup hub</span>
+          </div>
+          <div class="price">
+            <div>
+              <b>£199</b> <span class="small">/ night (match weekend)</span><br/>
+              <span class="small">Fastest route plan included</span>
+            </div>
+            <button class="selectbtn">View base</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="packages">
+      <h2>Packages (what makes you non‑comparable)</h2>
+      <p class="muted">This is where you win vs “they can find it cheaper on Airbnb”. You’re selling the weekend + guidance.</p>
+
+      <div class="grid2">
+        <div class="card pack">
+          <span class="tag">CORE • Most popular</span>
+          <h3>Matchday Base + Away Fan Guide</h3>
+          <div class="muted">Perfect for fans who want city centre + a smooth matchday.</div>
+          <ul>
+            <li>Base accommodation (city centre)</li>
+            <li>Pre‑match pubs (with commentary options)</li>
+            <li>Bus stop + route plan to Anfield</li>
+            <li>Post‑match return plan (avoid road closures)</li>
+            <li>Late food options: vegan / halal / budget / premium</li>
+            <li>Live music + quiet alternatives</li>
+          </ul>
+          <button class="buy">Select Core</button>
+          <div class="small" style="margin-top:10px">Add‑ons at checkout: fridge beers, scarf pack, late checkout.</div>
+        </div>
+
+        <div class="card pack">
+          <span class="tag">PARTY • Highest margin</span>
+          <h3>Welcome Drinks + Nightlife Route</h3>
+          <div class="muted">For groups who want the “proper” Liverpool weekend.</div>
+          <ul>
+            <li>Everything in Core</li>
+            <li>Fridge stocked with your chosen beers</li>
+            <li>Bar route: best pints + football songs</li>
+            <li>Optional “Fan Hub” meetup location</li>
+            <li>Priority late food list + reservations suggestions</li>
+            <li>WhatsApp concierge for the weekend</li>
+          </ul>
+          <button class="buy">Select Party</button>
+          <div class="small" style="margin-top:10px">Works best for: derby weekends, European nights, big 6 fixtures.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="hosts">
+      <h2>For hotels & hosts</h2>
+      <p class="muted">
+        We bring travelling supporters to Liverpool on match weekends. You keep your normal guests on other dates.
+      </p>
+      <div class="card" style="padding:16px">
+        <div class="grid2">
+          <div>
+            <div class="tag">WHY PARTNER</div>
+            <ul>
+              <li>Incremental matchday revenue (we target away fans directly)</li>
+              <li>Higher conversion: guests book the “weekend plan”, not just a bed</li>
+              <li>We handle guest comms + matchday guidance</li>
+              <li>Optional: block-booking or revenue share</li>
+            </ul>
+          </div>
+          <div>
+            <div class="tag">CONTACT</div>
+            <div class="muted" style="margin-top:8px">
+              Email: partners@awaystays.co.uk (placeholder)<br/>
+              WhatsApp: +44 7xxx xxxxxx (placeholder)
+            </div>
+            <div class="small" style="margin-top:10px">
+              You can replace these with your real details and add a simple partner form.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© AwayStays • Fan-first matchday bases (prototype)</div>
+      <div>Policies • Support • Partner terms</div>
+    </div>
+  </div>
+</body>
+</html>
